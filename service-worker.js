@@ -12,9 +12,10 @@ self.addEventListener('activate', event => {
 })
 
 self.addEventListener('sync', event => {
-  let type = event.tag.split('-')[1]
+  let type = event.tag.split('-')[1];
+  let time = event.tag.split('-')[2];
   console.log(
-    `%c sync event fired: request ${type}`,
+    `%c sync event fired: request ${type} at ${time}`,
     `${styles} background: #00449e; color: #cdecff;`
   )
   event.waitUntil(fetchResource(type))
