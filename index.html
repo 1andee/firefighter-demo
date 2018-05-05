@@ -54,13 +54,15 @@
           }
         },
         requestButton(type) {
-          var vueThis = this
+          var vueThis = this;
+          var date = new Date();
+          let time = date.toTimeString();
           if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./service-worker.js').then((registration) => {
               return navigator.serviceWorker.ready;
             }).then((registration) => {
-              registration.sync.register(`request-${type}`).then(() => {
-                console.log('%c sync registered', 'font-size: 16px; background: #e27403; color: #ffffff; border-radius: 5px; padding: 5px 25px 5px 10px; line-height: 30px;');
+              registration.sync.register(`request-${type}-${time}`).then(() => {
+                console.log('%c sync registered at', time);
               }).catch(function (error) {
                 console.log('Unable to fetch resources.');
               });
