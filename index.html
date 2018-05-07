@@ -50,6 +50,12 @@
         updateRequest(response, type, time) {
           if (response === 200) {
             this.responseSuccess = true
+
+            var request = new XMLHttpRequest();
+            request.open('POST', 'https://script.google.com/macros/s/AKfycbycR1J18ivj17n2Z6zdb0Ibs6imKll86hqMs_Wa/exec', true);
+            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+            request.send(`name=${type}&comment=${type}+at+${time}`)
+            
             this.messageQueue.push(`You sent a message: <span>${type}</span> at <span>${time}</span>.`)
           }
         },
