@@ -61,7 +61,7 @@
             navigator.serviceWorker.register('./service-worker.js').then((registration) => {
               return navigator.serviceWorker.ready;
             }).then((registration) => {
-              registration.sync.register(`request-${type}`).then(() => {
+              registration.sync.register(`request-${type}-${time}`).then(() => {
                 console.log('%c sync registered');
               }).catch(function (error) {
                 console.log('Unable to fetch resources.');
@@ -82,6 +82,7 @@
     vm.isOnline();
 
     navigator.serviceWorker.addEventListener('message', function handler(event) {
+      console.log(event);
       vm.updateRequest(event.data.response, event.data.resource, event.data.time)
     });
 
