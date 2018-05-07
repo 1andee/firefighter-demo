@@ -47,20 +47,22 @@
             this.offline = true
           }
         },
-        updateRequest(response, type) {
+        updateRequest(response, type, time) {
           if (response === 200) {
             this.responseSuccess = true
-            this.messageQueue.push(`You sent a message: <span>${type}</span>.`)
+            this.messageQueue.push(`You sent a message: <span>${type}</span> at <span>${time}</span>.`)
           }
         },
         requestButton(type) {
-          var vueThis = this
+          var vueThis = this;
+          let date = new Date();
+          let time = date.toTimeString();
           if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./service-worker.js').then((registration) => {
               return navigator.serviceWorker.ready;
             }).then((registration) => {
               registration.sync.register(`request-${type}`).then(() => {
-                console.log('%c sync registered', 'font-size: 16px; background: #e27403; color: #ffffff; border-radius: 5px; padding: 5px 25px 5px 10px; line-height: 30px;');
+                console.log('%c sync registered');
               }).catch(function (error) {
                 console.log('Unable to fetch resources.');
               });
@@ -80,7 +82,7 @@
     vm.isOnline();
 
     navigator.serviceWorker.addEventListener('message', function handler(event) {
-      vm.updateRequest(event.data.response, event.data.resource)
+      vm.updateRequest(event.data.response, event.data.resource, event.data.time)
     });
 
   </script>

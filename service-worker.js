@@ -12,15 +12,16 @@ self.addEventListener('activate', event => {
 })
 
 self.addEventListener('sync', event => {
-  let type = event.tag.split('-')[1]
+  let type = event.tag.split('-')[1];
+  let time = event.tag.split('-')[2];
   console.log(
     `%c sync event fired: request ${type}`,
     `${styles} background: #00449e; color: #cdecff;`
   )
-  event.waitUntil(fetchResource(type))
+  event.waitUntil(fetchResource(type, time))
 })
 
-const fetchResource = resource => {
+fetchResource = (resource, time) => {
   console.log(
     `%c getting response info: ${resource}`,
     `${styles} background: #5e2ca5; color: #d3b9f3;`
@@ -37,8 +38,9 @@ const fetchResource = resource => {
       console.log(text)
 
       const message = {
-        response: text.status,
-        resource: resource
+        response: text.status
+        resource: resource,
+        time: time
       }
 
       self.clients
