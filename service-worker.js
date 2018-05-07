@@ -38,7 +38,7 @@ fetchResource = (resource, time) => {
       console.log(text)
 
       const message = {
-        response: text.status
+        response: text.status,
         resource: resource,
         time: time
       }
